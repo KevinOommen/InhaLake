@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather/UI/air_page.dart';
 import 'package:weather/UI/water_page.dart';
 import 'package:weather/ui/home.dart';
 
@@ -26,7 +27,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  List pages = const [HomeScreen(), WaterPage()];
+  List pages = const [HomeScreen(), WaterPage(),AirPage()];
   int screens = 0;
 
   @override
@@ -100,7 +101,7 @@ class _MainScreenState extends State<MainScreen> {
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        screens = 1;
+                        screens = 2;
                       });
                     },
                     child: const Icon(

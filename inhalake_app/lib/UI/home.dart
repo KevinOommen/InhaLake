@@ -13,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   getWeather() async {
     final _response = await http.get(Uri.parse(
-        'https://api.openweathermap.org/data/2.5/weather?lat=9.991324&lon=76.302381&units=metric&appid=d45526feb921f51fdff2e096508f568b'));
+        "https://api.openweathermap.org/data/2.5/weather?lat=9.991324&lon=76.302381&units=metric&appid=d45526feb921f51fdff2e096508f568b"));
     if (_response.statusCode == 200) {
       print('sucess');
       var data = json.decode(_response.body);
