@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
-
+import 'package:weather/UI/water_page.dart';
+import 'package:weather/ui/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,12 +11,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
-      title: 'Inhalake',
-      routes: {
-        "/home/": (context) => const HomeScreen(),
-  },
-      home: HomeScreen(),
+    return const MaterialApp(
+      title: 'Weather App',
+      home: MainScreen(),
     );
   }
 }
@@ -29,11 +26,8 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  List pages = const [HomeScreen()];
+  List pages = const [HomeScreen(), WaterPage()];
   int screens = 0;
-  Color homeIconColor = Colors.white70;
-  Color waterIconColor = Colors.lightBlue;
-  Color airIconColor = Colors.lightBlue;
 
   @override
   Widget build(BuildContext context) {
@@ -76,15 +70,12 @@ class _MainScreenState extends State<MainScreen> {
                     onTap: () {
                       setState(() {
                         screens = 0;
-                        homeIconColor = Colors.white70;
-                        waterIconColor = Colors.lightBlue;
-                        airIconColor = Colors.lightBlue; 
                       });
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.home,
                       size: 32,
-                      color: homeIconColor,
+                      color: Colors.lightBlue,
                     ),
                   ),
                 ),
@@ -94,17 +85,13 @@ class _MainScreenState extends State<MainScreen> {
                     onTap: () {
                       setState(() {
                         screens = 1;
-                        waterIconColor = Colors.white70;
-                        homeIconColor = Colors.lightBlue;
-                        airIconColor = Colors.lightBlue;
-
                       });
                       
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.water,
                       size: 32,
-                      color: waterIconColor,
+                      color: Colors.lightBlue,
                     ),
                   ),
                 ),
@@ -113,16 +100,13 @@ class _MainScreenState extends State<MainScreen> {
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        screens = 2;
-                        airIconColor = Colors.white70;
-                        homeIconColor = Colors.lightBlue;
-                        waterIconColor = Colors.lightBlue;
+                        screens = 1;
                       });
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.air,
                       size: 32,
-                      color: airIconColor,
+                      color: Colors.lightBlue,
                     ),
                   ),
                 ),
