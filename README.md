@@ -32,3 +32,4 @@ WORKING
  
 
 UI AND HARDWARE
+<img src="homescreen.png">
