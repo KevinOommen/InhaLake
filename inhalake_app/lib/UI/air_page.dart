@@ -12,14 +12,39 @@ class AirPage extends StatefulWidget {
 }
 
 class _AirPageState extends State<AirPage> {
-  String msg = "";
-  num aqi = 0;
+  Map<String, dynamic>? listResponse;
+  List realTime = [];
+  int lastId = 0;
+  bool isLoaded = false;
+  var AQI = 0.0;
+
+
+  Future fetchData() async {
+    http.Response response;
+    response = await http.get(
+        Uri.parse('https://api.thingspeak.com/channels/2057428/feeds.json'));
+    if (response.statusCode == 200) {
+      listResponse = json.decode(response.body);
+      setState(() {
+        isLoaded = true;
+        realTime = listResponse!["feeds"];
+        lastId = listResponse!["channel"]["last_entry_id"] - 1;
+        AQI = double.parse(realTime[lastId]['field3']);
+      });
+      print(AQI);
+    } else {
+      print('fail');
+    }
+  }
+
   num co_value = 0;
   num o3_value = 0;
   num no_value = 0;
   num so2_value = 0;
   num pm_value = 0;
   num nh3_value = 0;
+
+  
   Future getAirQuality() async {
     final _response = await http.get(Uri.parse(
         "http://api.openweathermap.org/data/2.5/air_pollution?lat=50&lon=50&appid=d45526feb921f51fdff2e096508f568b"));
@@ -46,31 +71,13 @@ class _AirPageState extends State<AirPage> {
         so2_value = decodedData['list'][0]['components']['so2'];
         pm_value = decodedData['list'][0]['components']['pm2_5'];
         nh3_value = decodedData['list'][0]['components']['nh3'];
-        if(aqi < 0.3){
-          msg = "Good";
-        }
-        else if(aqi < 0.6){
-          msg = "Moderate";
-        }
-        else if(aqi < 0.9){
-          msg = "Unhealthy for Sensitive Groups";
-        }
-        else if(aqi < 1.2){
-          msg = "Unhealthy";
-        }
-        else if(aqi < 1.5){
-          msg = "Very Unhealthy";
-        }
-        else{
-          msg = "Hazardous";
-        }
       }
     });
   }
 
   @override
   void initState() {
-    
+    fetchData();
     var decodedData = getAirQuality();
 
     super.initState();
@@ -81,96 +88,100 @@ class _AirPageState extends State<AirPage> {
     return Scaffold(
         backgroundColor: const Color.fromRGBO(17, 29, 59, 1),
         body: SafeArea(
-          child: Center(
-              child: Column(
-            children: [
-              const Text(
-                'Air Quality Analyser',
-                style: TextStyle(color: Colors.lightBlue, fontSize: 20),
-              ),
-              Container(
-                  child: SfRadialGauge(
-                axes: <RadialAxis>[
-                  RadialAxis(
-                    minimum: 0,
-                    maximum: 500,
-                    showLabels: false,
-                    showTicks: false,
-                    startAngle: 130,
-                    endAngle: 45,
-                    axisLineStyle: AxisLineStyle(
-                      thickness: 0.1,
-                      cornerStyle: CornerStyle.bothCurve,
-                      color: Colors.grey.withOpacity(0.3),
-                      thicknessUnit: GaugeSizeUnit.factor,
-                    ),
-                    annotations: <GaugeAnnotation>[
-                      GaugeAnnotation(
-                        widget: Column(
-                          children: [
-                            Container(height: 150),
-                            Text(
-                              (aqi * 100).toString(),
-                              style: const TextStyle(
-                                  fontSize: 50,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.lightBlue),
-                            ),
-                            Container(height: 50),
-                            const Text(
-                              "AQI",
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.lightBlue),
-                            ),
-                             Text(
-                              msg,
-                              style: const TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.lightBlue),
-                            ),
-                          ],
-                        ),
-                        angle: 0,
-                        positionFactor: 0,
+          child: Visibility(
+            visible: isLoaded,
+            replacement: const Center(child: CircularProgressIndicator()),
+            child: Center(
+                child: Column(
+              children: [
+                Text('Air Quality Analyser',
+                    style: GoogleFonts.getFont(
+                      "Poppins",
+                      textStyle: TextStyle(
+                        color: Color.fromARGB(255, 253, 250, 250),
+                        fontSize: 25,
                       ),
-                    ],
-                    pointers: <GaugePointer>[
-                      RangePointer(
-                        value: (aqi * 100).toDouble(),
+                    )),
+                Container(
+                    child: SfRadialGauge(
+                  axes: <RadialAxis>[
+                    RadialAxis(
+                      minimum: 0,
+                      maximum: 500,
+                      showLabels: false,
+                      showTicks: false,
+                      startAngle: 130,
+                      endAngle: 45,
+                      axisLineStyle: AxisLineStyle(
+                        thickness: 0.1,
                         cornerStyle: CornerStyle.bothCurve,
-                        width: 0.1,
-                        sizeUnit: GaugeSizeUnit.factor,
-                        enableAnimation: true,
-                        animationDuration: 1000,
-                        animationType: AnimationType.linear,
-                        gradient: SweepGradient(
-                          colors: <Color>[
-                            Color(0xFF00FF00),
-                            Color(0xFFFFFF00),
-                            Color(0xFFFFA500),
-                            Color(0xFFFF0000),
-                          ],
-                          //each color should be at a stop
-
-                          stops: <double>[0.25, 0.5, 0.75, 1],
-                        ),
+                        color: Colors.grey.withOpacity(0.3),
+                        thicknessUnit: GaugeSizeUnit.factor,
                       ),
-                    ],
-                  ),
-                ],
-              )),
-              MyCard(
-                  co_value: co_value,
-                  o3_value: o3_value,
-                  no_value: no_value,
-                  so2_value: so2_value,
-                  pm_value: pm_value,
-                  nh3_value: nh3_value)
-            ],
-          )),
+                      annotations: <GaugeAnnotation>[
+                        GaugeAnnotation(
+                          widget: Column(
+                            children: [
+                              Container(height: 150),
+                              Text(AQI.toString(),
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: const TextStyle(
+                                      color: Colors.lightBlue,
+                                      fontSize: 30,
+                                    ),
+                                  )),
+                              Container(height: 50),
+                              Text('AQI',
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: TextStyle(
+                                      color: Colors.lightBlue,
+                                      fontSize: 30,
+                                    ),
+                                  )),
+                            ],
+                          ),
+                          angle: 0,
+                          positionFactor: 0,
+                        ),
+                      ],
+                      pointers: <GaugePointer>[
+                        RangePointer(
+                          value: AQI.toDouble(),
+                          cornerStyle: CornerStyle.bothCurve,
+                          width: 0.1,
+                          sizeUnit: GaugeSizeUnit.factor,
+                          enableAnimation: true,
+                          animationDuration: 1000,
+                          animationType: AnimationType.linear,
+                          gradient: SweepGradient(
+                            colors: <Color>[
+                              Color(0xFF00FF00),
+                              Color(0xFFFFFF00),
+                              Color(0xFFFFA500),
+                              Color(0xFFFF0000),
+                            ],
+                            //each color should be at a stop
+
+                            stops: <double>[0.25, 0.5, 0.75, 1],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )),
+                Expanded(
+                    child: MyCard(
+                        co_value: co_value,
+                        o3_value: o3_value,
+                        no_value: no_value,
+                        so2_value: so2_value,
+                        pm_value: pm_value,
+                        nh3_value: nh3_value))
+              ],
+            )),
+          ),
         ));
   }
 }
@@ -223,26 +234,22 @@ class _MyCardState extends State<MyCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _buildItem('CO', widget.co_value, Colors.red),
-                    _buildItem('NO', widget.no_value, Colors.blue),
-                    _buildItem('O3', widget.o3_value, Colors.green),
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildItem('CO', widget.co_value, Colors.red),
+                  _buildItem('NO', widget.no_value, Colors.blue),
+                  _buildItem('O3', widget.o3_value, Colors.green),
+                ],
               ),
-              //SizedBox(height: 8),
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _buildItem('SO2', widget.so2_value, Colors.yellow),
-                    _buildItem('PM2.5', widget.pm_value, Colors.purple),
-                    _buildItem('NH3', widget.nh3_value, Colors.orange),
-                  ],
-                ),
+              
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildItem('SO2', widget.so2_value, Colors.yellow),
+                  _buildItem('PM2.5', widget.pm_value, Colors.purple),
+                  _buildItem('NH3', widget.nh3_value, Colors.orange),
+                ],
               ),
               SizedBox(height: 16),
             ],
