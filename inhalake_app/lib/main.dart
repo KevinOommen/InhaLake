@@ -3,6 +3,10 @@ import 'package:weather/UI/air_page.dart';
 import 'package:weather/UI/water_page.dart';
 import 'package:weather/ui/home.dart';
 
+import 'UI/first.dart';
+import 'UI/login.dart';
+import 'UI/register.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -12,9 +16,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Weather App',
-      home: MainScreen(),
+    return MaterialApp(
+      title: 'Inhalake',
+      routes: {
+        "/login/": (context) => const LoginView(),
+        "/register/": (context) => const RegisterView(),
+        "/home/": (context) => const HomeScreen(),
+      },
+      home: first(),
     );
   }
 }
@@ -27,7 +36,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  List pages = const [HomeScreen(), WaterPage(),AirPage()];
+  List pages = const [HomeScreen(), WaterPage(), AirPage()];
   int screens = 0;
 
   @override
@@ -87,7 +96,6 @@ class _MainScreenState extends State<MainScreen> {
                       setState(() {
                         screens = 1;
                       });
-                      
                     },
                     child: const Icon(
                       Icons.water,
