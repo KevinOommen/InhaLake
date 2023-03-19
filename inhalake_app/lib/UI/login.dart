@@ -15,10 +15,13 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
-  @override
+
+  
+ @override
   void initState() {
-    _email = TextEditingController();
-    _password = TextEditingController(); // TODO: implement initState
+     _email = TextEditingController();
+    _password = TextEditingController(); 
+    super.initState();
   }
 
   @override
@@ -64,7 +67,8 @@ class _LoginViewState extends State<LoginView> {
                             textStyle: TextStyle(
                               color: Color.fromARGB(255, 253, 250, 250),
                               fontSize: 40,
-                            )),
+                            ),
+                            ),
                       ),
                       Image.asset(
                         'assets/inhalake.png',

@@ -17,7 +17,7 @@ class _WaterPageState extends State<WaterPage> {
 
   Map<String, dynamic>? listResponse;
   List realTime = [];
-  int lastId = 16;
+  int lastId = 0;
   int tds = 0;
   int turbidity = 0;
   String verdict = '';
@@ -35,7 +35,7 @@ class _WaterPageState extends State<WaterPage> {
         tds = int.parse(realTime[lastId]['field2']);
         turbidity = int.parse(realTime[lastId]['field1']);
       });
-
+      print(realTime[lastId]['field3']);
       if (0 <= turbidity && turbidity <= 19 && tds < 500) {
         verdict = 'Drinkable  water';
       } else {
@@ -49,6 +49,7 @@ class _WaterPageState extends State<WaterPage> {
   @override
   void initState() {
     fetchData();
+
     super.initState();
   }
 
