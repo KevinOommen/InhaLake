@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:video_player/video_player.dart';
 
 class first extends StatefulWidget {
   const first({Key? key}) : super(key: key);
@@ -10,6 +10,13 @@ class first extends StatefulWidget {
 }
 
 class _firstState extends State<first> {
+  late VideoPlayerController controller;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,21 +29,20 @@ class _firstState extends State<first> {
               'assets/get-started.png',
               scale: 0.5,
             )),
-            
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
-                  child: Text("Breathe in.\nDrink up.\nMonitor your air and water quality with ease!!!",
-                  style:GoogleFonts.getFont("Poppins",
-                                    textStyle: const TextStyle(
-                                      color: Color.fromARGB(255, 253, 250, 250),
-                                      fontSize: 22,
-                                    )) ),
+                  child: Text(
+                      "Breathe in.\nDrink up.\nMonitor your air and water quality with ease!!!",
+                      style: GoogleFonts.getFont("Poppins",
+                          textStyle: const TextStyle(
+                            color: Color.fromARGB(255, 253, 250, 250),
+                            fontSize: 22,
+                          ))),
                 ),
               ),
-            )
-                ,
+            ),
             Container(
               height: 70,
               width: 350,
@@ -54,21 +60,22 @@ class _firstState extends State<first> {
                 children: [
                   Expanded(
                     child: TextButton(
-                      //set background color of button to white
-                      
-                      style: ButtonStyle(
-                      backgroundColor:  MaterialStateProperty.all(Color(0xFFFFFFFF)),
-                      shape:MaterialStateProperty.all<RoundedRectangleBorder>(
-                        const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(100),
-                              bottomLeft: Radius.circular(100),
-                              topRight: Radius.circular(100),
-                              bottomRight: Radius.circular(100),),
-                              
-                        ),
-                      )
-                    ),
+                        //set background color of button to white
+
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Color(0xFFFFFFFF)),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(100),
+                                  bottomLeft: Radius.circular(100),
+                                  topRight: Radius.circular(100),
+                                  bottomRight: Radius.circular(100),
+                                ),
+                              ),
+                            )),
                         onPressed: () {
                           Navigator.of(context).pushNamedAndRemoveUntil(
                               "/login/", (route) => false);
@@ -81,7 +88,7 @@ class _firstState extends State<first> {
                               fontWeight: FontWeight.bold),
                         )),
                   ),
-                  const SizedBox(width:10),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: TextButton(
                         onPressed: () {
@@ -96,13 +103,12 @@ class _firstState extends State<first> {
                               fontWeight: FontWeight.bold),
                         )),
                   ),
-                  
                 ],
               ),
             ),
             SizedBox(
-                    height: 20,
-                  )
+              height: 20,
+            )
           ],
         ),
       ),

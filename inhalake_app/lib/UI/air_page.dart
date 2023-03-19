@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:google_fonts/google_fonts.dart';
 
 class AirPage extends StatefulWidget {
   const AirPage({Key? key}) : super(key: key);
@@ -32,7 +33,6 @@ class _AirPageState extends State<AirPage> {
   updateUi(var decodedData) {
     setState(() {
       if (decodedData == null) {
-        aqi = 0;
         co_value = 0;
         no_value = 0;
         o3_value = 0;
@@ -40,7 +40,6 @@ class _AirPageState extends State<AirPage> {
         pm_value = 0;
         nh3_value = 0;
       } else {
-        aqi = decodedData['list'][0]['main']['aqi'];
         co_value = decodedData['list'][0]['components']['co'];
         no_value = decodedData['list'][0]['components']['no'];
         o3_value = decodedData['list'][0]['components']['o3'];
@@ -69,22 +68,18 @@ class _AirPageState extends State<AirPage> {
     });
   }
 
-  bool isLoaded = false;
   @override
   void initState() {
+    
     var decodedData = getAirQuality();
-    if (decodedData != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromRGBO(17, 29, 59, 1),
+        backgroundColor: const Color.fromRGBO(17, 29, 59, 1),
         body: SafeArea(
           child: Center(
               child: Column(

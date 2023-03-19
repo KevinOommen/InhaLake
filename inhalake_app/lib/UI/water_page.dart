@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
@@ -17,7 +18,7 @@ class _WaterPageState extends State<WaterPage> {
 
   Map<String, dynamic>? listResponse;
   List realTime = [];
-  int lastId = 16;
+  int lastId = 0;
   int tds = 0;
   int turbidity = 0;
   String verdict = '';
@@ -35,7 +36,7 @@ class _WaterPageState extends State<WaterPage> {
         tds = int.parse(realTime[lastId]['field2']);
         turbidity = int.parse(realTime[lastId]['field1']);
       });
-
+      print(realTime[lastId]['field3']);
       if (0 <= turbidity && turbidity <= 19 && tds < 500) {
         verdict = 'Drinkable  water';
       } else {
@@ -49,6 +50,7 @@ class _WaterPageState extends State<WaterPage> {
   @override
   void initState() {
     fetchData();
+
     super.initState();
   }
 
@@ -63,10 +65,16 @@ class _WaterPageState extends State<WaterPage> {
             padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
             physics: const BouncingScrollPhysics(),
             children: [
-              const Center(
+              Center(
                 child: Text(
                   'Water quality Analyser',
-                  style: TextStyle(color: Colors.lightBlue, fontSize: 30),
+                  style: GoogleFonts.getFont(
+                    "Poppins",
+                    textStyle: const TextStyle(
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      fontSize: 30,
+                    ),
+                  ),
                 ),
               ),
               SfRadialGauge(
