@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -11,58 +10,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  getWeather() async {
-    final _response = await http.get(Uri.parse(
-        'https://api.openweathermap.org/data/2.5/weather?lat=9.991324&lon=76.302381&units=metric&appid=d45526feb921f51fdff2e096508f568b'));
-    if (_response.statusCode == 200) {
-      print('sucess');
-      var data = json.decode(_response.body);
-      updateUi(data);
-    } else {
-      print(_response.statusCode);
-    }
-  }
+  
 
-  updateUi(var decodedData) {
-    setState(() {
-      setState(() {
-        if (decodedData == null) {
-          temp = 0;
-          feelLike = 0;
-          wind = 0;
-          humidity = 0;
-          city = 'not avail';
-          weather = 'not avail';
-        } else {
-          temp = decodedData['main']['temp'];
-          feelLike = decodedData['main']['feels_like'];
-          wind = decodedData['wind']['speed'];
-          humidity = decodedData['main']['humidity'];
-          city = decodedData['name'];
-          weather = decodedData['weather']['description'];
-        }
-      });
-    });
-  }
+  bool isLoaded = true;
 
-  num? temp;
-  num? feelLike;
-  num? wind;
-  num? humidity;
-  String? city;
-  String? weather;
-
-  bool isLoaded = false;
-  @override
-  void initState() {
-    var decodedData = getWeather();
-    if (decodedData != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,14 +38,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     flex: 1,
                   ),
                   Column(
-                    children: [
-                      const Text(
+                    children: const [
+                      Text(
                         '             Monday,12 Feb',
                         style: TextStyle(color: Colors.grey),
                       ),
                       Text(
                         '     Ernakulam',
-                        style: const TextStyle(
+                        style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
                             fontWeight: FontWeight.w500),
@@ -129,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Column(
                     children: [
-                     const  Text(
+                      const Text(
                         ' 20°',
                         style: TextStyle(
                             color: Colors.lightBlue,

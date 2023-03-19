@@ -1,0 +1,34 @@
+TDS 
+
+Drinkable- 0-500
+not drinkable- 1000<
+
+description--0-50(ideal drinking water)
+50-200(Filitered drinking water)
+200-300(marginally accepted)
+300-400(High Tds water from tap 0r spring)
+
+
+PH
+drinkable - 6.5-8.5
+non drinkable -0-6.5 and 8.5-14
+
+description--0-5-acidic
+5-6.5-slightly acidic
+6.5-7.5-neutral
+7.5-8.5-slightly basic
+8.5-14-basic
+
+turbidity
+
+drinkable-0-19
+non drinkable- >19
+
+description--0-20(clean water)
+21-50(cloudy water)
+50-240(very cloudy)
+
+ 
+
+
+
