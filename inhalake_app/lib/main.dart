@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:weather/UI/air_page.dart';
 import 'package:weather/UI/water_page.dart';
 import 'package:weather/ui/home.dart';
+import 'UI/first.dart';
+import 'UI/login.dart';
+import 'UI/register.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,29 +15,37 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Weather App',
-      home: MainScreen(),
-    );
+    return MaterialApp(
+        title: 'Inhalake',
+        routes: {
+          "/login/": (context) => const LoginView(),
+          "/register/": (context) => const RegisterView(),
+          "/home/": (context) => const MainScreen(
+                isLoggedIn: true,
+              ),
+        },
+        home: const first());
   }
 }
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  const MainScreen({Key? key, required this.isLoggedIn}) : super(key: key);
+
+  final bool isLoggedIn;
 
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
-  List pages = const [HomeScreen(), WaterPage()];
-  int screens = 0;
+  List pages = const [HomeScreen(), WaterPage(), AirPage()];
 
+  int screens = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 17, 29, 59),
-        body: pages[screens],
+        backgroundColor: const Color.fromRGBO(17, 29, 59, 1),
+        body: widget.isLoggedIn ? pages[screens] : const first(),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.only(bottom: 23, left: 23, right: 23),
           child: Container(
@@ -80,13 +92,12 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 80),
+                  padding: const EdgeInsets.only(left: 75),
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
                         screens = 1;
                       });
-                      
                     },
                     child: const Icon(
                       Icons.water,
@@ -96,11 +107,11 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 70),
+                  padding: const EdgeInsets.only(left: 75),
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        screens = 1;
+                        screens = 2;
                       });
                     },
                     child: const Icon(

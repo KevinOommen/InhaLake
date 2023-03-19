@@ -193,7 +193,7 @@ class _WaterPageState extends State<WaterPage> {
                           angle: 90,
                           positionFactor: 0.8,
                           widget: Text(
-                            '7.3',
+                            '7.8',
                             style: TextStyle(
                                 color: Colors.lightBlue,
                                 fontWeight: FontWeight.bold,
@@ -203,7 +203,7 @@ class _WaterPageState extends State<WaterPage> {
                       ],
                       pointers: <GaugePointer>[
                         NeedlePointer(
-                          value: 7.3,
+                          value: 7.8,
                           needleStartWidth: isCardView ? 0 : 1,
                           needleEndWidth: isCardView ? 5 : 8,
                           animationType: AnimationType.easeOutBack,
@@ -367,7 +367,7 @@ class _WaterPageState extends State<WaterPage> {
                             height: 60,
                             width: 230,
                             decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.5),
+                                color: Colors.black.withOpacity(0.2),
                                 borderRadius: const BorderRadius.only(
                                     topLeft: Radius.circular(100),
                                     topRight: Radius.circular(100),
@@ -376,7 +376,7 @@ class _WaterPageState extends State<WaterPage> {
                             child: const Padding(
                               padding: EdgeInsets.only(left: 20, top: 17),
                               child: Text(
-                                'pH- slightly acidic',
+                                'pH- slightly basic',
                                 overflow: TextOverflow.fade,
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
@@ -391,7 +391,7 @@ class _WaterPageState extends State<WaterPage> {
                             height: 60,
                             width: 240,
                             decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.5),
+                                color: Colors.black.withOpacity(0.2),
                                 borderRadius: const BorderRadius.only(
                                     topLeft: Radius.circular(100),
                                     topRight: Radius.circular(100),
@@ -415,7 +415,7 @@ class _WaterPageState extends State<WaterPage> {
                             height: 70,
                             width: 270,
                             decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.5),
+                                color: Colors.black.withOpacity(0.2),
                                 borderRadius: const BorderRadius.only(
                                     topLeft: Radius.circular(100),
                                     topRight: Radius.circular(100),
