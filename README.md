@@ -39,3 +39,4 @@ WORKING
 <img src="login.png">
 <img src="splash screen.png">
 <img src="waterpage.png">
+<img src="hardware.jpg">
