@@ -17,6 +17,7 @@ class _AirPageState extends State<AirPage> {
   int lastId = 0;
   bool isLoaded = false;
   var AQI = 0.0;
+  String msg = "";
 
   Future fetchData() async {
     http.Response response;
@@ -68,6 +69,24 @@ class _AirPageState extends State<AirPage> {
         so2_value = decodedData['list'][0]['components']['so2'];
         pm_value = decodedData['list'][0]['components']['pm2_5'];
         nh3_value = decodedData['list'][0]['components']['nh3'];
+        if(AQI < 0.3){
+          msg = "Good";
+        }
+        else if(AQI < 0.6){
+          msg = "Moderate";
+        }
+        else if(AQI < 0.9){
+          msg = "Unhealthy for Sensitive Groups";
+        }
+        else if(AQI < 1.2){
+          msg = "Unhealthy";
+        }
+        else if(AQI < 1.5){
+          msg = "Very Unhealthy";
+        }
+        else{
+          msg = "Hazardous";
+        }
       }
     });
   }
@@ -128,7 +147,7 @@ class _AirPageState extends State<AirPage> {
                                       fontSize: 30,
                                     ),
                                   )),
-                              Container(height: 50),
+                              Container(height: 10),
                               Text('AQI',
                                   style: GoogleFonts.getFont(
                                     "Poppins",
@@ -137,6 +156,14 @@ class _AirPageState extends State<AirPage> {
                                       fontSize: 30,
                                     ),
                                   )),
+                              Text(msg,
+                                  style: GoogleFonts.getFont(
+                                    "Poppins",
+                                    textStyle: TextStyle(
+                                      color: Colors.lightBlue,
+                                      fontSize: 30,
+                                    ),
+                                  ))    
                             ],
                           ),
                           angle: 0,
