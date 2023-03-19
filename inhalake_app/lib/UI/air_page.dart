@@ -11,15 +11,15 @@ class AirPage extends StatefulWidget {
 }
 
 class _AirPageState extends State<AirPage> {
+  String msg = "";
   num aqi = 0;
-
   num co_value = 0;
   num o3_value = 0;
   num no_value = 0;
   num so2_value = 0;
   num pm_value = 0;
   num nh3_value = 0;
-      Future getAirQuality() async {
+  Future getAirQuality() async {
     final _response = await http.get(Uri.parse(
         "http://api.openweathermap.org/data/2.5/air_pollution?lat=50&lon=50&appid=d45526feb921f51fdff2e096508f568b"));
     if (_response.statusCode == 200) {
@@ -47,6 +47,24 @@ class _AirPageState extends State<AirPage> {
         so2_value = decodedData['list'][0]['components']['so2'];
         pm_value = decodedData['list'][0]['components']['pm2_5'];
         nh3_value = decodedData['list'][0]['components']['nh3'];
+        if(aqi < 0.3){
+          msg = "Good";
+        }
+        else if(aqi < 0.6){
+          msg = "Moderate";
+        }
+        else if(aqi < 0.9){
+          msg = "Unhealthy for Sensitive Groups";
+        }
+        else if(aqi < 1.2){
+          msg = "Unhealthy";
+        }
+        else if(aqi < 1.5){
+          msg = "Very Unhealthy";
+        }
+        else{
+          msg = "Hazardous";
+        }
       }
     });
   }
@@ -62,6 +80,7 @@ class _AirPageState extends State<AirPage> {
     }
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,104 +88,117 @@ class _AirPageState extends State<AirPage> {
         body: SafeArea(
           child: Center(
               child: Column(
-              children: [
-                const Text('Air Quality Analyser',style: TextStyle(color: Colors.lightBlue,fontSize: 20),),
-          Container(
-              child: SfRadialGauge(
-            axes: <RadialAxis>[
-              RadialAxis(
-                minimum: 0,
-                maximum: 500,
-                showLabels: false,
-                showTicks: false,
-                startAngle: 130,
-                endAngle: 45,
-                axisLineStyle: AxisLineStyle(
-                  thickness: 0.1,
-                  cornerStyle: CornerStyle.bothCurve,
-                  color: Colors.grey.withOpacity(0.3),
-                  thicknessUnit: GaugeSizeUnit.factor,
-                ),
-                
-                annotations:  <GaugeAnnotation>[
-                  GaugeAnnotation(
-                    widget: Column(
-                      children: [
-                        Container(height: 150),
-                        Text(
-                          (aqi*100).toString(),
-                          style: const TextStyle(
-                            fontSize: 50,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.lightBlue
-                          ),
-                        ),
-                        Container(height: 50),
-                        const Text(
-                          "AQI",
-                          style:  TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.lightBlue
-                          ),
-                        ),
-                        
-                      ],
-                    ),
-                    angle: 0,
-                    positionFactor: 0,
-                  ),
-                ],
-                pointers:  <GaugePointer>[
-                  RangePointer(
-                    value: (aqi*100).toDouble(),
-                    cornerStyle: CornerStyle.bothCurve,
-                    width: 0.1,
-                    sizeUnit: GaugeSizeUnit.factor,
-                    enableAnimation: true,
-                    animationDuration: 1000,
-                    animationType: AnimationType.linear,
-                    gradient: SweepGradient(
-                      colors: <Color>[
-                        Color(0xFF00FF00),
-                        Color(0xFFFFFF00),
-                        Color(0xFFFFA500),
-                        Color(0xFFFF0000),
-                      ],
-                      //each color should be at a stop
-        
-                      stops: <double>[0.25, 0.5, 0.75, 1],
-                    ),
-                  ),
-                ],
+            children: [
+              const Text(
+                'Air Quality Analyser',
+                style: TextStyle(color: Colors.lightBlue, fontSize: 20),
               ),
+              Container(
+                  child: SfRadialGauge(
+                axes: <RadialAxis>[
+                  RadialAxis(
+                    minimum: 0,
+                    maximum: 500,
+                    showLabels: false,
+                    showTicks: false,
+                    startAngle: 130,
+                    endAngle: 45,
+                    axisLineStyle: AxisLineStyle(
+                      thickness: 0.1,
+                      cornerStyle: CornerStyle.bothCurve,
+                      color: Colors.grey.withOpacity(0.3),
+                      thicknessUnit: GaugeSizeUnit.factor,
+                    ),
+                    annotations: <GaugeAnnotation>[
+                      GaugeAnnotation(
+                        widget: Column(
+                          children: [
+                            Container(height: 150),
+                            Text(
+                              (aqi * 100).toString(),
+                              style: const TextStyle(
+                                  fontSize: 50,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightBlue),
+                            ),
+                            Container(height: 50),
+                            const Text(
+                              "AQI",
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightBlue),
+                            ),
+                             Text(
+                              msg,
+                              style: const TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.lightBlue),
+                            ),
+                          ],
+                        ),
+                        angle: 0,
+                        positionFactor: 0,
+                      ),
+                    ],
+                    pointers: <GaugePointer>[
+                      RangePointer(
+                        value: (aqi * 100).toDouble(),
+                        cornerStyle: CornerStyle.bothCurve,
+                        width: 0.1,
+                        sizeUnit: GaugeSizeUnit.factor,
+                        enableAnimation: true,
+                        animationDuration: 1000,
+                        animationType: AnimationType.linear,
+                        gradient: SweepGradient(
+                          colors: <Color>[
+                            Color(0xFF00FF00),
+                            Color(0xFFFFFF00),
+                            Color(0xFFFFA500),
+                            Color(0xFFFF0000),
+                          ],
+                          //each color should be at a stop
+
+                          stops: <double>[0.25, 0.5, 0.75, 1],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              )),
+              MyCard(
+                  co_value: co_value,
+                  o3_value: o3_value,
+                  no_value: no_value,
+                  so2_value: so2_value,
+                  pm_value: pm_value,
+                  nh3_value: nh3_value)
             ],
           )),
-          MyCard(co_value:co_value,o3_value:o3_value,no_value:no_value,so2_value:so2_value,pm_value:pm_value,nh3_value:nh3_value)
-              ],
-            )),
         ));
   }
 }
 
-
 class MyCard extends StatefulWidget {
- 
   num co_value = 0;
   num o3_value = 0;
   num no_value = 0;
   num so2_value = 0;
   num pm_value = 0;
   num nh3_value = 0;
-  MyCard({required this.co_value, required this.o3_value, required this.no_value, required this.so2_value, required this.pm_value, required this.nh3_value});
+  MyCard(
+      {required this.co_value,
+      required this.o3_value,
+      required this.no_value,
+      required this.so2_value,
+      required this.pm_value,
+      required this.nh3_value});
   @override
   _MyCardState createState() => _MyCardState();
 }
 
 class _MyCardState extends State<MyCard> {
-
-  
-
   // void _updatePercentages() {
   //   // Your logic to update the percentages goes here
   //   setState(() {
