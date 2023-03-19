@@ -10,35 +10,48 @@ class first extends StatefulWidget {
 }
 
 class _firstState extends State<first> {
-  VideoPlayerController controller;
+  late final VideoPlayerController controller;
+  bool isLoaded = true;
   @override
   void initState() {
-    // TODO: implement initState
+    controller = VideoPlayerController.asset('assets/girlwalk.mp4')
+      ..initialize().then((_) {
+        controller.play();
+        controller.setLooping(true);
+      });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 17, 29, 59),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-                child: Image.asset(
-              'assets/get-started.png',
-              scale: 0.5,
-            )),
+        backgroundColor: Color.fromARGB(255, 17, 29, 59),
+        body: Visibility(
+          visible: isLoaded,
+          replacement: const Center(child: CircularProgressIndicator()),
+          child: Column(children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(35),
+              child: Container(
+                height: 400,
+                width: double.infinity,
+                child: VideoPlayer(controller),
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(200)),
+              ),
+            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
                   child: Text(
                       "Breathe in.\nDrink up.\nMonitor your air and water quality with ease!!!",
-                      style: GoogleFonts.getFont("Poppins",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.getFont("Kanit",
                           textStyle: const TextStyle(
                             color: Color.fromARGB(255, 253, 250, 250),
-                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
                           ))),
                 ),
               ),
@@ -108,10 +121,8 @@ class _firstState extends State<first> {
             ),
             SizedBox(
               height: 20,
-            )
-          ],
-        ),
-      ),
-    );
+            ),
+          ]),
+        ));
   }
 }

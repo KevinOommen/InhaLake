@@ -230,22 +230,26 @@ class _MyCardState extends State<MyCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildItem('CO', widget.co_value, Colors.red),
-                  _buildItem('NO', widget.no_value, Colors.blue),
-                  _buildItem('O3', widget.o3_value, Colors.green),
-                ],
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildItem('CO', widget.co_value, Colors.red),
+                    _buildItem('NO', widget.no_value, Colors.blue),
+                    _buildItem('O3', widget.o3_value, Colors.green),
+                  ],
+                ),
               ),
-              SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildItem('SO2', widget.so2_value, Colors.yellow),
-                  _buildItem('PM2.5', widget.pm_value, Colors.purple),
-                  _buildItem('NH3', widget.nh3_value, Colors.orange),
-                ],
+              //SizedBox(height: 8),
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildItem('SO2', widget.so2_value, Colors.yellow),
+                    _buildItem('PM2.5', widget.pm_value, Colors.purple),
+                    _buildItem('NH3', widget.nh3_value, Colors.orange),
+                  ],
+                ),
               ),
               SizedBox(height: 16),
             ],
