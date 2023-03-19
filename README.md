@@ -31,5 +31,11 @@ WORKING
 	:the app which uses firebase authentication to allow users get all information easily
  
 
-UI AND HARDWARE
+#UI AND HARDWARE
 <img src="homepage.png">
+<img src="signup.png">
+<img src="airpage.png">
+<img src="landing screen.png">
+<img src="login.png">
+<img src="splash screen.png">
+<img src="waterpage.png">
