@@ -49,7 +49,6 @@ class _AirPageState extends State<AirPage> {
     if (_response.statusCode == 200) {
       var data = json.decode(_response.body);
       updateUi(data);
-      print(_response.statusCode);
     }
   }
 

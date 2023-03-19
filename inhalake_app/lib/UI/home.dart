@@ -19,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ..initialize().then((_) {
         controller.play();
         controller.setLooping(true);
+        controller.setVolume(0.0);
       });
     super.initState();
   }
@@ -63,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: GoogleFonts.getFont(
                               "Poppins",
                               textStyle: TextStyle(
-                                shadows: [
+                                  shadows: [
                                     Shadow(
                                         color: Colors.black.withOpacity(0.3),
                                         offset: const Offset(15, 15),
@@ -71,7 +72,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ],
                                   color: Color.fromARGB(255, 0, 0, 0),
                                   fontSize: 12,
-                                  
                                   fontWeight: FontWeight.bold),
                             ),
                           ),

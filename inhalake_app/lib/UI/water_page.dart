@@ -19,9 +19,8 @@ class _WaterPageState extends State<WaterPage> {
   Map<String, dynamic>? listResponse;
   List realTime = [];
   int lastId = 0;
-  int tds = 0;
-  int turbidity = 0;
-  String verdict = '';
+  var tds = 0.0;
+  var turbidity = 0.0;
 
   Future fetchData() async {
     http.Response response;
@@ -33,19 +32,39 @@ class _WaterPageState extends State<WaterPage> {
         isLoaded = true;
         realTime = listResponse!["feeds"];
         lastId = listResponse!["channel"]["last_entry_id"] - 1;
-        tds = int.parse(realTime[lastId]['field2']);
-        turbidity = int.parse(realTime[lastId]['field1']);
+        turbidity = double.parse(realTime[lastId]['field2']);
+        tds = double.parse(realTime[lastId]['field1']);
       });
-      print(realTime[lastId]['field3']);
-      if (0 <= turbidity && turbidity <= 19 && tds < 500) {
-        verdict = 'Drinkable  water';
-      } else {
-        verdict = 'Not Drinkable water';
-      }
+      print(tds);
     } else {
       print('fail');
     }
   }
+
+//   Future fetchData() async {
+//     http.Response response;
+//     response = await http.get(
+//         Uri.parse('https://api.thingspeak.com/channels/2057428/feeds.json'));
+//     if (response.statusCode == 200) {
+//       listResponse = json.decode(response.body);
+//       setState(() {
+//         isLoaded = true;
+//         realTime = listResponse!["feeds"];
+//         lastId = listResponse!["channel"]["last_entry_id"] - 1;
+//         tds = int.parse(realTime[lastId]['field2']);
+//         turbidity = int.parse(realTime[lastId]['field1']);
+//         print(turbidity);
+// });
+//         if (0 <= turbidity && turbidity <= 19 && tds < 500) {
+//           verdict = 'Drinkable  water';
+//         } else {
+//           verdict = 'Not Drinkable water';
+//         }
+
+//     } else {
+//       print('fail');
+//     }
+//   }
 
   @override
   void initState() {
@@ -238,7 +257,7 @@ class _WaterPageState extends State<WaterPage> {
             ),
             Center(
               child: Text(
-                verdict,
+                'Drinkable water',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.getFont(
                   "Poppins",
@@ -285,9 +304,8 @@ class _WaterPageState extends State<WaterPage> {
                         borderRadius: BorderRadius.circular(200)),
                     child: Center(
                         child: Text(
-                      isLoaded ? realTime[lastId]['field1'] : '0.346',
-                      style:
-                          const TextStyle(color: Colors.white, fontSize: 20),
+                      isLoaded ? tds.toString() : '0.346',
+                      style: const TextStyle(color: Colors.white, fontSize: 20),
                     )),
                   )
                 ],
@@ -329,7 +347,7 @@ class _WaterPageState extends State<WaterPage> {
                         borderRadius: BorderRadius.circular(200)),
                     child: Center(
                         child: Text(
-                      isLoaded ? realTime[lastId]['field2'] : '146.54',
+                      isLoaded ? turbidity.toString() : '146.54',
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     )),
                   )
@@ -386,8 +404,8 @@ class _WaterPageState extends State<WaterPage> {
                               'pH- slightly basic',
                               overflow: TextOverflow.fade,
                               textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 20),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
                             ),
                           ),
                         ),
@@ -410,8 +428,8 @@ class _WaterPageState extends State<WaterPage> {
                               'Turbidity- clean water,',
                               overflow: TextOverflow.fade,
                               textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 20),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
                             ),
                           ),
                         ),
@@ -435,8 +453,8 @@ class _WaterPageState extends State<WaterPage> {
                               'TDS- Filtered drinking water,',
                               overflow: TextOverflow.fade,
                               textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 20),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
                             ),
                           ),
                         ),
