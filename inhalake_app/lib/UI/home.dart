@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 230, left: 30),
+                  padding: const EdgeInsets.only(top: 230, left: 30),
                   child: Text(
                     'Hi, How was your Day?',
                     style: GoogleFonts.getFont(
