@@ -11,6 +11,6 @@
 .dart_tool/
 .packages
 .pub/
+Flutter-Debug.log*
 .flutter-plugins
 .flutter-plugins-dependencies
-Flutter-Debug.log*
