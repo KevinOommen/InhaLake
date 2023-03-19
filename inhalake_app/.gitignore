@@ -12,3 +12,5 @@
 .packages
 .pub/
 Flutter-Debug.log*
+.flutter-plugins
+.flutter-plugins-dependencies

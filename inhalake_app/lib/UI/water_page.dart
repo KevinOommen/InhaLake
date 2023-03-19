@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
@@ -64,10 +65,16 @@ class _WaterPageState extends State<WaterPage> {
             padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
             physics: const BouncingScrollPhysics(),
             children: [
-              const Center(
+              Center(
                 child: Text(
                   'Water quality Analyser',
-                  style: TextStyle(color: Colors.lightBlue, fontSize: 30),
+                  style: GoogleFonts.getFont(
+                    "Poppins",
+                    textStyle: const TextStyle(
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      fontSize: 30,
+                    ),
+                  ),
                 ),
               ),
               SfRadialGauge(
