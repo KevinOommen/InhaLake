@@ -18,7 +18,6 @@ class _AirPageState extends State<AirPage> {
   bool isLoaded = false;
   var AQI = 0.0;
 
-
   Future fetchData() async {
     http.Response response;
     response = await http.get(
@@ -44,7 +43,6 @@ class _AirPageState extends State<AirPage> {
   num pm_value = 0;
   num nh3_value = 0;
 
-  
   Future getAirQuality() async {
     final _response = await http.get(Uri.parse(
         "http://api.openweathermap.org/data/2.5/air_pollution?lat=50&lon=50&appid=d45526feb921f51fdff2e096508f568b"));
@@ -230,7 +228,7 @@ class _MyCardState extends State<MyCard> {
           borderRadius: BorderRadius.circular(25.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -242,7 +240,6 @@ class _MyCardState extends State<MyCard> {
                   _buildItem('O3', widget.o3_value, Colors.green),
                 ],
               ),
-              
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -251,7 +248,6 @@ class _MyCardState extends State<MyCard> {
                   _buildItem('NH3', widget.nh3_value, Colors.orange),
                 ],
               ),
-              SizedBox(height: 16),
             ],
           ),
         ),

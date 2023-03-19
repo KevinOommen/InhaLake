@@ -60,11 +60,11 @@ class _LoginViewState extends State<LoginView> {
                   padding: const EdgeInsets.all(15.0),
                   child: Column(
                     children: <Widget>[
-                      Padding(padding: EdgeInsets.all(20)),
+                      const Padding(padding: EdgeInsets.all(20)),
                       Text(
                         'Login',
                         style: GoogleFonts.getFont("Poppins",
-                            textStyle: TextStyle(
+                            textStyle: const TextStyle(
                               color: Color.fromARGB(255, 253, 250, 250),
                               fontSize: 40,
                             ),

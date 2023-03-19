@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:video_player/video_player.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -46,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 25, right: 25, top: 15),
+                  padding: const EdgeInsets.only(left: 25, right: 25, top: 60),
                   child: Row(
                     children: [
                       const Icon(
@@ -58,18 +57,40 @@ class _HomeScreenState extends State<HomeScreen> {
                         flex: 1,
                       ),
                       Column(
-                        children: const [
+                        children: [
                           Text(
-                            '             Monday,12 Feb',
-                            style: TextStyle(color: Colors.grey),
+                            'Sunday,19 Mar',
+                            style: GoogleFonts.getFont(
+                              "Poppins",
+                              textStyle: TextStyle(
+                                shadows: [
+                                    Shadow(
+                                        color: Colors.black.withOpacity(0.3),
+                                        offset: const Offset(15, 15),
+                                        blurRadius: 15),
+                                  ],
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  fontSize: 12,
+                                  
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                           Text(
-                            '     Ernakulam',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500),
-                          )
+                            'Ernakulam',
+                            style: GoogleFonts.getFont(
+                              "Poppins",
+                              textStyle: TextStyle(
+                                  shadows: [
+                                    Shadow(
+                                        color: Colors.black.withOpacity(0.3),
+                                        offset: const Offset(15, 15),
+                                        blurRadius: 15),
+                                  ],
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
                         ],
                       )
                     ],
@@ -81,10 +102,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     'Hi, How was your Day?',
                     style: GoogleFonts.getFont(
                       "Poppins",
-                      textStyle: const TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        fontSize: 35,
-                      ),
+                      textStyle: TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          fontSize: 35,
+                          shadows: [
+                            Shadow(
+                                color: Colors.black.withOpacity(0.3),
+                                offset: const Offset(15, 15),
+                                blurRadius: 15),
+                          ],
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
